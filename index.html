@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+<title></title>
+<script src="./Cesium.js"></script>
+<style>
+@import url(./Widgets/widgets.css);
+#map {
+  position: absolute; top: 0; left: 0; height: 100%; width: 100%;
+  margin: 0; overflow: hidden; padding: 0; font-family: sans-serif;
+}
+html, body {padding: 0; margin: 0; overflow: hidden; height: 100%;}
+</style>
+</head>
+<body>
+<div id="map"></div>
+<script>
+var viewer = new Cesium.Viewer('map', {
+  sceneMode: Cesium.SceneMode.COLUMBUS_VIEW, 
+  mapProjection : new Cesium.WebMercatorProjection(), 
+  timeline: false, animation: false, 
+  imageryProvider: new Cesium.OpenStreetMapImageryProvider({
+    url: 'http://cyberjapandata.gsi.go.jp/xyz/std/', fileExtension: 'png',
+    credit: '地理院タイル（標準地図）'}),
+  baseLayerPicker: false});
+viewer.scene.terrainProvider = new Cesium.CesiumTerrainProvider({
+  url: 'http://cesiumjs.org/stk-terrain/tilesets/world/tiles'});
+
+viewer.scene.camera.flyTo({
+  destination : Cesium.Cartesian3.fromDegrees(137.4798, 35.8726, 50000.0)
+});
+
+viewer.scene.imageryLayers.addImageryProvider(
+  new Cesium.OpenStreetMapImageryProvider({
+    url: 'http://cyberjapandata.gsi.go.jp/xyz/20140928dol/', 
+    fileExtension: 'png', minimumLevel: 10, maximumLelve: 18, 
+    rectangle: Cesium.Rectangle.fromDegrees(137.33, 35.78, 137.60, 35.98), 
+    credit: '御嶽山噴火活動 正射画像（9/28）'}
+  ));
+</script>
+</body>
+</html>
